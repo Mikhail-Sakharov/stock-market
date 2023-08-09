@@ -1,5 +1,9 @@
+import StockList from '../stock-list/stock-list';
+
 function App(): JSX.Element {
-  return <p>Hello, world!</p>;
+  return (
+    <StockList />
+  );
 }
 
 export default App;
