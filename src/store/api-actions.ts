@@ -14,7 +14,7 @@ export const fetchStocksAction = createAsyncThunk<Stock[], QueryArgs, {
   'stocks/get',
   async (queryArgs, {dispatch, extra: api}) => {
     const queryString = getQueryString(queryArgs);
-    const {data} = await api.get<Stock[]>(`${BASE_URL}${APIRoute.Stable}${APIRoute.Stock}${APIRoute.Market}${APIRoute.Collection}${APIRoute.List}${queryString}`);
+    const {data} = await api.get<Stock[]>(`${BASE_URL}${APIRoute.Stable}${APIRoute.Stock}${APIRoute.Market}${APIRoute.Collection}${APIRoute.Sector}${queryString}`);
     return data;
   },
 );

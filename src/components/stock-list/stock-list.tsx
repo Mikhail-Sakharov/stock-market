@@ -23,7 +23,7 @@ function StockList(): JSX.Element {
   useEffect(() => {
     dispatch(fetchStocksAction({
       token,
-      collectionName: CollectionName.Mostactive
+      collectionName: CollectionName.Technology
     }));
   }, [dispatch, token]);
 
@@ -50,21 +50,21 @@ function StockList(): JSX.Element {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {`${stock.companyName}`}
+                {`${stock.companyName ?? '-'}`}
               </TableCell>
-              <TableCell align="right">{`${stock.symbol}`}</TableCell>
-              <TableCell align="right">{`${stock.primaryExchange}`}</TableCell>
-              <TableCell align="right">{`${stock.marketCap.toLocaleString()} ${stock.currency}`}</TableCell>
+              <TableCell align="right">{`${stock.symbol ?? '-'}`}</TableCell>
+              <TableCell align="right">{`${stock.primaryExchange ?? '-'}`}</TableCell>
+              <TableCell align="right">{`${stock.marketCap ? stock.marketCap.toLocaleString() : '-'} ${stock.currency ?? ''}`}</TableCell>
               <TableCell
                 align="right"
                 sx={{color: stock.change > 0 ? 'green' : 'red'}}
               >
-                {`${stock.change} / ${stock.changePercent}`}
+                {`${stock.change ?? '-'} / ${stock.changePercent ?? '-'}`}
               </TableCell>
-              <TableCell align="right">{stock.iexAskPrice}</TableCell>
-              <TableCell align="right">{stock.iexBidPrice}</TableCell>
-              <TableCell align="right">{stock.latestPrice}</TableCell>
-              <TableCell align="right">{stock.iexVolume}</TableCell>
+              <TableCell align="right">{stock.iexAskPrice ?? '-'}</TableCell>
+              <TableCell align="right">{stock.iexBidPrice ?? '-'}</TableCell>
+              <TableCell align="right">{stock.latestPrice ?? '-'}</TableCell>
+              <TableCell align="right">{stock.iexVolume ?? '-'}</TableCell>
             </TableRow>
           ))}
         </TableBody>
