@@ -9,7 +9,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {ChangeEvent, useEffect, useState} from 'react';
 import {fetchSectorsAction, fetchStocksAction, fetchTagsAction} from '../../store/api-actions';
 import {CollectionName} from '../../types/collection-name.enum';
-import {MAX_STOCKS_PER_PAGE, token as userToken} from '../../const';
+import {MAX_STOCKS_PER_PAGE} from '../../const';
 import {getSectors, getStocks, getTags} from '../../store/app-data/selectors';
 import {nanoid} from 'nanoid';
 import {Pagination} from '@mui/material';
@@ -30,16 +30,18 @@ function StockList(): JSX.Element {
   const [collectionType, setCollectionType] = useState<CollectionType>(CollectionType.List);
   const [collectionName, setCollectionName] = useState<string>(CollectionName.Mostactive);
 
-  const token = userToken;
+  const token = process.env.REACT_APP_TOKEN;
 
   useEffect(() => {
-    switch(collectionType) {
-      case CollectionType.Sector:
-        dispatch(fetchSectorsAction({token}));
-        break;
-      case CollectionType.Tag:
-        dispatch(fetchTagsAction({token}));
-        break;
+    if (token) {
+      switch(collectionType) {
+        case CollectionType.Sector:
+          dispatch(fetchSectorsAction({token}));
+          break;
+        case CollectionType.Tag:
+          dispatch(fetchTagsAction({token}));
+          break;
+      }
     }
   }, [dispatch, token, collectionType]);
 
