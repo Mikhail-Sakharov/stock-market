@@ -1,14 +1,17 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {ReducerNameSpace} from '../../const';
-import {fetchStocksAction} from '../api-actions';
+import {fetchSectorsAction, fetchStocksAction} from '../api-actions';
 import {Stock} from '../../types/stock.interface';
+import {Sector} from '../../types/sector.interface';
 
 type AppData = {
   stocks: Stock[];
+  sectors: Sector[];
 };
 
 const initialState: AppData = {
-  stocks: []
+  stocks: [],
+  sectors: []
 };
 
 export const appData = createSlice({
@@ -19,6 +22,9 @@ export const appData = createSlice({
     builder
       .addCase(fetchStocksAction.fulfilled, (state, action) => {
         state.stocks = action.payload;
+      })
+      .addCase(fetchSectorsAction.fulfilled, (state, action) => {
+        state.sectors = action.payload;
       });
   }
 });
