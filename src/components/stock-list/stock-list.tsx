@@ -53,7 +53,7 @@ function StockList(): JSX.Element {
         collectionName
       }));
     }
-  }, [collectionType, collectionName, dispatch, token]);
+  }, [collectionName, dispatch, token]);
 
   const handlePageNumberChange = (_event: ChangeEvent<unknown>, page: number) => {
     setPageNumber(page);
