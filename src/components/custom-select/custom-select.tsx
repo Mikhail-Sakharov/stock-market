@@ -6,9 +6,10 @@ interface CustomSelectProps {
   selectLabel: string;
   selectItems: string[];
   setValue: (state: CollectionType) => void;
+  initialValue?: string;
 }
 
-function CustomSelect({selectLabel, selectItems, setValue}: CustomSelectProps): JSX.Element {
+function CustomSelect({selectLabel, selectItems, setValue, initialValue}: CustomSelectProps): JSX.Element {
   const handleSelectChange = (evt: SelectChangeEvent<string>) => {
     const value = evt.target.value as CollectionType;
     setValue(value);
@@ -18,6 +19,7 @@ function CustomSelect({selectLabel, selectItems, setValue}: CustomSelectProps): 
     <FormControl sx={{ m: 1, minWidth: 200, maxWidth: 400 }} size="small">
       <InputLabel id="select-small-label">{selectLabel}</InputLabel>
       <Select
+        value={initialValue}
         labelId="select-small-label"
         id="select-small"
         label={selectLabel}

@@ -29,3 +29,5 @@ export const token = 'pk_da03ec1ae5264b05bb2e9172e1ce3cba';
 export enum ReducerNameSpace {
   AppData = 'APP_DATA'
 }
+
+export const MAX_STOCKS_PER_PAGE = 10;

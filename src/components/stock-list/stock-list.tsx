@@ -9,14 +9,12 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {ChangeEvent, useEffect, useState} from 'react';
 import {fetchSectorsAction, fetchStocksAction, fetchTagsAction} from '../../store/api-actions';
 import {CollectionName} from '../../types/collection-name.enum';
-import {token as userToken} from '../../const';
+import {MAX_STOCKS_PER_PAGE, token as userToken} from '../../const';
 import {getSectors, getStocks, getTags} from '../../store/app-data/selectors';
 import {nanoid} from 'nanoid';
 import {Pagination} from '@mui/material';
 import CustomSelect from '../custom-select/custom-select';
 import {CollectionType} from '../../types/colletion-type.enum';
-
-const MAX_STOCKS_PER_PAGE = 10;
 
 function StockList(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -29,8 +27,8 @@ function StockList(): JSX.Element {
 
   const [pageNumber, setPageNumber] = useState(1);
 
-  const [collectionType, setCollectionType] = useState<CollectionType | undefined>(undefined);
-  const [collectionName, setCollectionName] = useState('');
+  const [collectionType, setCollectionType] = useState<CollectionType>(CollectionType.List);
+  const [collectionName, setCollectionName] = useState<string>(CollectionName.Mostactive);
 
   const token = userToken;
 
@@ -40,11 +38,13 @@ function StockList(): JSX.Element {
   }, [dispatch, token]);
 
   useEffect(() => {
-    dispatch(fetchStocksAction({
-      token,
-      collectionType,
-      collectionName
-    }));
+    if (token && collectionType && collectionName) {
+      dispatch(fetchStocksAction({
+        token,
+        collectionType,
+        collectionName
+      }));
+    }
   }, [collectionType, collectionName, dispatch, token]);
 
   const handlePageNumberChange = (_event: ChangeEvent<unknown>, page: number) => {
@@ -55,6 +55,7 @@ function StockList(): JSX.Element {
     <div style={{display: 'flex', flexDirection: 'column'}}>
       <div style={{display: 'flex', flexDirection: 'row'}}>
         <CustomSelect
+          initialValue={collectionType}
           selectLabel='Choose the Type'
           selectItems={Object.values(CollectionType)}
           setValue={setCollectionType}
@@ -83,6 +84,7 @@ function StockList(): JSX.Element {
           collectionType === CollectionType.List
             && (
               <CustomSelect
+                initialValue={collectionName}
                 selectLabel='Choose the List'
                 selectItems={Object.values(CollectionName)}
                 setValue={setCollectionName}
