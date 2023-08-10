@@ -1,15 +1,16 @@
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from '@mui/material';
 import {nanoid} from 'nanoid';
+import {CollectionType} from '../../types/colletion-type.enum';
 
 interface CustomSelectProps {
   selectLabel: string;
   selectItems: string[];
-  setValue: (state: string) => void;
+  setValue: (state: CollectionType) => void;
 }
 
 function CustomSelect({selectLabel, selectItems, setValue}: CustomSelectProps): JSX.Element {
   const handleSelectChange = (evt: SelectChangeEvent<string>) => {
-    const value = evt.target.value;
+    const value = evt.target.value as CollectionType;
     setValue(value);
   };
 

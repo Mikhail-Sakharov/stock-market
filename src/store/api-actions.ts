@@ -4,9 +4,10 @@ import {QueryArgs} from '../types/query-args.interface';
 import {AppDispatch, State} from '../types/state.types';
 import {AxiosInstance} from 'axios';
 import {getQueryString} from '../helpers';
-import {APIRoute, BASE_URL} from '../const';
+import {APIRoute, BASE_URL, CollectionTypeAPIRouteMap} from '../const';
 import {Sector} from '../types/sector.interface';
 import {Tag} from '../types/tag.interface';
+import {CollectionType} from '../types/colletion-type.enum';
 
 export const fetchStocksAction = createAsyncThunk<Stock[], QueryArgs, {
   dispatch: AppDispatch;
@@ -15,8 +16,9 @@ export const fetchStocksAction = createAsyncThunk<Stock[], QueryArgs, {
 }>(
   'stocks/get',
   async (queryArgs, {dispatch, extra: api}) => {
+    const collectionType = CollectionTypeAPIRouteMap[queryArgs.collectionType as CollectionType];
     const queryString = getQueryString(queryArgs);
-    const {data} = await api.get<Stock[]>(`${BASE_URL}${APIRoute.Stable}${APIRoute.Stock}${APIRoute.Market}${APIRoute.Collection}${APIRoute.Sector}${queryString}`);
+    const {data} = await api.get<Stock[]>(`${BASE_URL}${APIRoute.Stable}${APIRoute.Stock}${APIRoute.Market}${APIRoute.Collection}${collectionType}${queryString}`);
     return data;
   },
 );

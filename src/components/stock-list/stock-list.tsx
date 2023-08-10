@@ -14,6 +14,7 @@ import {getSectors, getStocks, getTags} from '../../store/app-data/selectors';
 import {nanoid} from 'nanoid';
 import {Pagination} from '@mui/material';
 import CustomSelect from '../custom-select/custom-select';
+import {CollectionType} from '../../types/colletion-type.enum';
 
 const MAX_STOCKS_PER_PAGE = 10;
 
@@ -28,10 +29,8 @@ function StockList(): JSX.Element {
 
   const [pageNumber, setPageNumber] = useState(1);
 
-  const [collectionType, setCollectionType] = useState('');
-  const [sectorValue, setSectorValue] = useState('');
-  const [tagValue, setTagValue] = useState('');
-  const [listValue, setListValue] = useState('');
+  const [collectionType, setCollectionType] = useState<CollectionType | undefined>(undefined);
+  const [collectionName, setCollectionName] = useState('');
 
   const token = userToken;
 
@@ -43,9 +42,10 @@ function StockList(): JSX.Element {
   useEffect(() => {
     dispatch(fetchStocksAction({
       token,
-      collectionName: CollectionName.Technology
+      collectionType,
+      collectionName
     }));
-  }, [dispatch, token]);
+  }, [collectionType, collectionName, dispatch, token]);
 
   const handlePageNumberChange = (_event: ChangeEvent<unknown>, page: number) => {
     setPageNumber(page);
@@ -56,36 +56,36 @@ function StockList(): JSX.Element {
       <div style={{display: 'flex', flexDirection: 'row'}}>
         <CustomSelect
           selectLabel='Choose the Type'
-          selectItems={['Sector', 'Tag', 'List']}
+          selectItems={Object.values(CollectionType)}
           setValue={setCollectionType}
         />
         {
-          collectionType === 'Sector'
+          collectionType === CollectionType.Sector
             && (
               <CustomSelect
                 selectLabel='Choose the Sector'
                 selectItems={sectors.map((sector) => sector.name)}
-                setValue={setSectorValue}
+                setValue={setCollectionName}
               />
             )
         }
         {
-          collectionType === 'Tag'
+          collectionType === CollectionType.Tag
             && (
               <CustomSelect
                 selectLabel='Choose the Tag'
                 selectItems={tags.map((tag) => tag.name)}
-                setValue={setTagValue}
+                setValue={setCollectionName}
               />
             )
         }
         {
-          collectionType === 'List'
+          collectionType === CollectionType.List
             && (
               <CustomSelect
                 selectLabel='Choose the List'
                 selectItems={Object.values(CollectionName)}
-                setValue={setListValue}
+                setValue={setCollectionName}
               />
             )
         }

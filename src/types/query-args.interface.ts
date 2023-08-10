@@ -1,6 +1,7 @@
-import {CollectionName} from './collection-name.enum';
+import {CollectionType} from './colletion-type.enum';
 
 export interface QueryArgs {
   token: string;
-  collectionName?: CollectionName;
+  collectionType?: CollectionType;
+  collectionName?: string;
 }

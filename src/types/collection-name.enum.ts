@@ -7,6 +7,5 @@ export enum CollectionName {
   Premarket_losers = 'premarket_losers',
   Postmarket_losers = 'postmarket_losers',
   Premarket_gainers = 'premarket_gainers',
-  Postmarket_gainers = 'postmarket_gainers',
-  Technology = 'Technology'
+  Postmarket_gainers = 'postmarket_gainers'
 }
