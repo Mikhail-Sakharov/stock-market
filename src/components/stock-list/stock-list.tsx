@@ -33,9 +33,15 @@ function StockList(): JSX.Element {
   const token = userToken;
 
   useEffect(() => {
-    dispatch(fetchSectorsAction({token}));
-    dispatch(fetchTagsAction({token}));
-  }, [dispatch, token]);
+    switch(collectionType) {
+      case CollectionType.Sector:
+        dispatch(fetchSectorsAction({token}));
+        break;
+      case CollectionType.Tag:
+        dispatch(fetchTagsAction({token}));
+        break;
+    }
+  }, [dispatch, token, collectionType]);
 
   useEffect(() => {
     if (token && collectionType && collectionName) {
