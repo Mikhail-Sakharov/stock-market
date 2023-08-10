@@ -48,6 +48,7 @@ function StockList(): JSX.Element {
       <div style={{display: 'flex', flexDirection: 'row'}}>
         <CustomSelect selectName='Sector' selectItems={sectors.map((sector) => sector.name)}/>
         <CustomSelect selectName='Tag' selectItems={tags.map((tag) => tag.name)}/>
+        <CustomSelect selectName='List' selectItems={Object.values(CollectionName)}/>
       </div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
