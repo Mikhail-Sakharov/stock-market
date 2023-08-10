@@ -1,27 +1,25 @@
 import {FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from '@mui/material';
 import {nanoid} from 'nanoid';
-import {useState} from 'react';
 
 interface CustomSelectProps {
-  selectName: string;
+  selectLabel: string;
   selectItems: string[];
+  setValue: (state: string) => void;
 }
 
-function CustomSelect({selectName, selectItems}: CustomSelectProps): JSX.Element {
-  // const [value, setValue] = useState('');
-
+function CustomSelect({selectLabel, selectItems, setValue}: CustomSelectProps): JSX.Element {
   const handleSelectChange = (evt: SelectChangeEvent<string>) => {
     const value = evt.target.value;
-    console.log(value);
+    setValue(value);
   };
 
   return (
-    <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 400 }} size="small">
-      <InputLabel id="select-small-label">{selectName}</InputLabel>
+    <FormControl sx={{ m: 1, minWidth: 200, maxWidth: 400 }} size="small">
+      <InputLabel id="select-small-label">{selectLabel}</InputLabel>
       <Select
         labelId="select-small-label"
         id="select-small"
-        label={selectName}
+        label={selectLabel}
         onChange={handleSelectChange}
       >
         {

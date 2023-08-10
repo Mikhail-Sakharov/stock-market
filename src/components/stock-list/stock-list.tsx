@@ -28,15 +28,23 @@ function StockList(): JSX.Element {
 
   const [pageNumber, setPageNumber] = useState(1);
 
+  const [collectionType, setCollectionType] = useState('');
+  const [sectorValue, setSectorValue] = useState('');
+  const [tagValue, setTagValue] = useState('');
+  const [listValue, setListValue] = useState('');
+
   const token = userToken;
+
+  useEffect(() => {
+    dispatch(fetchSectorsAction({token}));
+    dispatch(fetchTagsAction({token}));
+  }, [dispatch, token]);
 
   useEffect(() => {
     dispatch(fetchStocksAction({
       token,
       collectionName: CollectionName.Technology
     }));
-    dispatch(fetchSectorsAction({token}));
-    dispatch(fetchTagsAction({token}));
   }, [dispatch, token]);
 
   const handlePageNumberChange = (_event: ChangeEvent<unknown>, page: number) => {
@@ -46,9 +54,41 @@ function StockList(): JSX.Element {
   return (
     <div style={{display: 'flex', flexDirection: 'column'}}>
       <div style={{display: 'flex', flexDirection: 'row'}}>
-        <CustomSelect selectName='Sector' selectItems={sectors.map((sector) => sector.name)}/>
-        <CustomSelect selectName='Tag' selectItems={tags.map((tag) => tag.name)}/>
-        <CustomSelect selectName='List' selectItems={Object.values(CollectionName)}/>
+        <CustomSelect
+          selectLabel='Choose the Type'
+          selectItems={['Sector', 'Tag', 'List']}
+          setValue={setCollectionType}
+        />
+        {
+          collectionType === 'Sector'
+            && (
+              <CustomSelect
+                selectLabel='Choose the Sector'
+                selectItems={sectors.map((sector) => sector.name)}
+                setValue={setSectorValue}
+              />
+            )
+        }
+        {
+          collectionType === 'Tag'
+            && (
+              <CustomSelect
+                selectLabel='Choose the Tag'
+                selectItems={tags.map((tag) => tag.name)}
+                setValue={setTagValue}
+              />
+            )
+        }
+        {
+          collectionType === 'List'
+            && (
+              <CustomSelect
+                selectLabel='Choose the List'
+                selectItems={Object.values(CollectionName)}
+                setValue={setListValue}
+              />
+            )
+        }
       </div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
