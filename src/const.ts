@@ -23,9 +23,6 @@ export const CollectionTypeAPIRouteMap = {
   [CollectionType.List]: APIRoute.List,
 };
 
-// TODO: перенести в переменные окружения
-export const token = 'pk_da03ec1ae5264b05bb2e9172e1ce3cba';
-
 export enum ReducerNameSpace {
   AppData = 'APP_DATA'
 }
