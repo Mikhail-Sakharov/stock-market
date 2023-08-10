@@ -10,7 +10,9 @@ export enum APIRoute {
   List = '/list',
   RefData = '/ref-data',
   Sectors = '/sectors',
-  Sector = '/sector'
+  Sector = '/sector',
+  Tags = '/tags',
+  Tag = '/tag'
 }
 
 // TODO: перенести в переменные окружения

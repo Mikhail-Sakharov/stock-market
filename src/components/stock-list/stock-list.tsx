@@ -7,10 +7,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {ChangeEvent, useEffect, useState} from 'react';
-import {fetchSectorsAction, fetchStocksAction} from '../../store/api-actions';
+import {fetchSectorsAction, fetchStocksAction, fetchTagsAction} from '../../store/api-actions';
 import {CollectionName} from '../../types/collection-name.enum';
 import {token as userToken} from '../../const';
-import {getSectors, getStocks} from '../../store/app-data/selectors';
+import {getSectors, getStocks, getTags} from '../../store/app-data/selectors';
 import {nanoid} from 'nanoid';
 import {Pagination} from '@mui/material';
 import CustomSelect from '../custom-select/custom-select';
@@ -22,6 +22,7 @@ function StockList(): JSX.Element {
 
   const stocks = useAppSelector(getStocks);
   const sectors = useAppSelector(getSectors);
+  const tags = useAppSelector(getTags);
 
   const pagesCount = Math.ceil(stocks.length / MAX_STOCKS_PER_PAGE);
 
@@ -35,6 +36,7 @@ function StockList(): JSX.Element {
       collectionName: CollectionName.Technology
     }));
     dispatch(fetchSectorsAction({token}));
+    dispatch(fetchTagsAction({token}));
   }, [dispatch, token]);
 
   const handlePageNumberChange = (_event: ChangeEvent<unknown>, page: number) => {
@@ -43,7 +45,10 @@ function StockList(): JSX.Element {
 
   return (
     <div style={{display: 'flex', flexDirection: 'column'}}>
-      <CustomSelect selectName='Sector' selectItems={sectors.map((sector) => sector.name)}/>
+      <div style={{display: 'flex', flexDirection: 'row'}}>
+        <CustomSelect selectName='Sector' selectItems={sectors.map((sector) => sector.name)}/>
+        <CustomSelect selectName='Tag' selectItems={tags.map((tag) => tag.name)}/>
+      </div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

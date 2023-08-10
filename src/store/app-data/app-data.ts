@@ -1,17 +1,20 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {ReducerNameSpace} from '../../const';
-import {fetchSectorsAction, fetchStocksAction} from '../api-actions';
+import {fetchSectorsAction, fetchStocksAction, fetchTagsAction} from '../api-actions';
 import {Stock} from '../../types/stock.interface';
 import {Sector} from '../../types/sector.interface';
+import {Tag} from '../../types/tag.interface';
 
 type AppData = {
   stocks: Stock[];
   sectors: Sector[];
+  tags: Tag[];
 };
 
 const initialState: AppData = {
   stocks: [],
-  sectors: []
+  sectors: [],
+  tags: []
 };
 
 export const appData = createSlice({
@@ -25,6 +28,9 @@ export const appData = createSlice({
       })
       .addCase(fetchSectorsAction.fulfilled, (state, action) => {
         state.sectors = action.payload;
+      })
+      .addCase(fetchTagsAction.fulfilled, (state, action) => {
+        state.tags = action.payload;
       });
   }
 });
